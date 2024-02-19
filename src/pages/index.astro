@@ -1,53 +1,54 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import {BtnEye} from "../components/BtnEye";
-import {User} from 'lucide-astro'
-import {LockKeyhole} from 'lucide-astro'
-import { idUsuario } from "../nanostore/atoms"
-import { token } from "../nanostore/atoms"
-import { rol } from "../nanostore/atoms"
-export const prerender = false
+import { BtnEye } from "../components/BtnEye";
+import { User } from "lucide-astro";
+import { LockKeyhole } from "lucide-astro";
+import { idUsuario } from "../nanostore/atoms";
+import { token } from "../nanostore/atoms";
+import { rol } from "../nanostore/atoms";
+export const prerender = false;
 
 // if (token.value != '') {
 // 	return Astro.redirect('/dashboard')
 // }
 
-
-if (Astro.request.method === "POST") {
+if (Astro.request.method == "POST") {
 	try {
 		const data = await Astro.request.formData();
 		const documento = data.get("documento");
 		const password = data.get("password");
 
-		var result
-			try {
-				console.log(password);
-				
-				result = await fetch( 'http://localhost:8080/api/user/auth', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'     
-					},	
-					body: JSON.stringify({documentousuario: documento, contraseñausuario: password})
-				})
-			} catch (error) {
-				console.log("error1");
-			}
-			
+		var result;
+		try {
+			console.log(password);
 
-			const dataApi = await result.json()
-			
-			if (dataApi.error) {
-				console.log("error 2")
-			}
+			result = await fetch("http://localhost:8080/api/user/auth", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					documentousuario: documento,
+					contraseñausuario: password,
+				}),
+			});
+		} catch (error) {
+			console.log("error1");
+		}
 
-			if (dataApi.token) {
-				console.log("funciona");
-				idUsuario.set(dataApi.idUsuario);
-				token.set(dataApi.token);
-				rol.set(dataApi.inforoles.nombrerol);
-				return Astro.redirect('/dashboard')
-			}
+		const dataApi = await result.json();
+
+		if (dataApi.error) {
+			console.log("error 2");
+		}
+
+		if (dataApi.token) {
+			console.log("funciona");
+			idUsuario.set(dataApi.idUsuario);
+			token.set(dataApi.token);
+			rol.set(dataApi.inforoles.nombrerol);
+			return Astro.redirect("/dashboard");
+		}
 	} catch (error) {
 		if (error instanceof Error) {
 			console.error(error.message);
@@ -58,36 +59,55 @@ if (Astro.request.method === "POST") {
 
 <Layout title="Login" islayout={false}>
 	<dir class="w-full h-svh flex justify-center items-center">
-		<div class="w-[400px] h-[500px] bg-white shadow-xl rounded-2xl  flex flex-col justify-center items-center relative">
+		<div
+			class="w-[400px] h-[500px] bg-white shadow-xl rounded-2xl flex flex-col justify-center items-center relative"
+		>
+			<img src="/logo-sena.webp" alt="" class="w-52 absolute -top-5" />
 
-			<img src="/logo-sena.webp" alt="" class="w-52 absolute -top-5">
+			<h1 class="text-3xl font-bold mb-10 mt-24">Iniciar sesion</h1>
 
-			<h1 class="text-3xl font-bold mb-10 mt-24"> Iniciar sesion </h1>
-			
 			<form class="flex flex-col items-center" method="POST">
-				<div class="h-12 w-60 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3">
-					<User stroke-width={2.4}/>
-					<input id="documento" name="documento" type="number" placeholder="Documento" class="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-bold ml-3 w-44">
+				<div
+					class="h-12 w-60 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3"
+				>
+					<User stroke-width={2.4} />
+					<input
+						id="documento"
+						name="documento"
+						type="number"
+						placeholder="Documento"
+						class="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-bold ml-3 w-44"
+					/>
 				</div>
-	
-				<div class="h-12 w-60 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mt-5">
-					<LockKeyhole stroke-width={2.2}/>
-					<input id="password" name="password" type="password" placeholder="Contraseña" class="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-bold ml-3 w-32 mr-5">
-	
+
+				<div
+					class="h-12 w-60 rounded-xl border-2 border-vgray flex items-center text-vgray2 px-3 mt-5"
+				>
+					<LockKeyhole stroke-width={2.2} />
+					<input
+						id="password"
+						name="password"
+						type="password"
+						placeholder="Contraseña"
+						class="placeholder:font-semibold placeholder:text-vgray2 outline-none text-black font-bold ml-3 w-32 mr-5"
+					/>
+
 					<button id="handlePassword">
-						<BtnEye client:visible/>
+						<BtnEye client:visible />
 					</button>
 				</div>
-	
-				<button id="login" class="px-4 py-2 bg-vgreen text-white font-bold text-lg mt-10 rounded-xl">
+
+				<button
+					id="login"
+					class="px-4 py-2 bg-vgreen text-white font-bold text-lg mt-10 rounded-xl"
+				>
 					Iniciar sesion
 				</button>
 			</form>
-			
 
 			<h1 id="messageError" class="text-red-500 font-bold tex-s"></h1>
-		</div> 
+		</div>
 	</dir>
 
-	<script src="../scripts/handleTypePassword"/>
+	<script src="../scripts/handleTypePassword"></script>
 </Layout>

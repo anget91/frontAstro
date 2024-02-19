@@ -1,13 +1,13 @@
 ---
 interface Props {
-	title: string
-	islayout?: boolean
-	
+	title: string;
+	islayout?: boolean;
 }
 
-import Sidebar from '../components/Sidebar.astro';
+import Sidebar from "../components/Sidebar.astro";
+import { ViewTransitions } from "astro:transitions";
 
-const { title, islayout = true} = Astro.props;
+const { title, islayout = true } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,15 +18,19 @@ const { title, islayout = true} = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<ViewTransitions />
 		<title>{title}</title>
 	</head>
 	<body>
-		{ islayout && <Sidebar/> }
-		<slot />
-	</body>
-</html>
-<style is:global>
-	/* :root {
+		<section class="h-svh w-full flex">
+			{islayout && <Sidebar />}
+
+			<section class="overflow-auto w-full relative max-h-svh">
+				<slot />
+			</section>
+		</section>
+		<style is:global>
+			/* :root {
 		--accent: 136, 58, 234;
 		--accent-light: 224, 204, 250;
 		--accent-dark: 49, 10, 101;
@@ -37,37 +41,39 @@ const { title, islayout = true} = Astro.props;
 			white 60%
 		);
 	} */
-	@font-face {
-		font-family: 'Poppins';
-		src: url('/fonts/Poppins-Regular.ttf') format('truetype')
-	}
-	html {
-		font-family: 'Poppins';
-		background: #F4F4F4;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-	* {
-		margin: 0;
-		padding: 0;
-	}
-	
-	input[type="number"] {
-  -moz-appearance: textfield;
-	}
+			@font-face {
+				font-family: "Poppins";
+				src: url("/fonts/Poppins-Regular.ttf") format("truetype");
+			}
+			html {
+				font-family: "Poppins";
+				background: #f4f4f4;
+			}
+			code {
+				font-family:
+					Menlo,
+					Monaco,
+					Lucida Console,
+					Liberation Mono,
+					DejaVu Sans Mono,
+					Bitstream Vera Sans Mono,
+					Courier New,
+					monospace;
+			}
+			* {
+				margin: 0;
+				padding: 0;
+			}
 
-	input[type="number"]::-webkit-inner-spin-button,
-	input[type="number"]::-webkit-outer-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-</style>
+			input[type="number"] {
+				-moz-appearance: textfield;
+			}
+
+			input[type="number"]::-webkit-inner-spin-button,
+			input[type="number"]::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+		</style>
+	</body>
+</html>
