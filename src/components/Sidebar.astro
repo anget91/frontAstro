@@ -1,0 +1,59 @@
+---
+import { NavButton } from "./NavButton"
+import {LayoutDashboard} from 'lucide-astro'
+import {Building2} from 'lucide-astro'
+import {Calculator} from 'lucide-astro'
+import {HandCoins} from 'lucide-astro'
+import {UsersRound} from 'lucide-astro'
+import { token, idUsuario, rol } from "../nanostore/atoms"
+
+// async function clear () {
+//   token.set("")
+//   idUsuario.set("")
+//   rol.set("")
+// }
+
+// if (Astro.request.method === "POST") {
+//    clear()
+//   return Astro.redirect('/')
+// }
+
+---
+
+<section class="h-svh w-[280px] bg-[#F4F4F4]  border-r-2 border-mygray  flex flex-col items-center relative">
+<img class="w-48" src="/logo-sena.webp" alt="">
+
+  <NavButton url="/dashboard" ruta='dashboard' text="Dashboard" client:visible>
+    <LayoutDashboard size={22}/>
+  </NavButton>
+
+  <NavButton  url="/empresas" ruta='empresas' text="Empresas" client:visible>
+    <Building2 size={22}/>
+  </NavButton>
+
+  <NavButton ruta='calculo-fic' text="Calculo Fic" client:visible>
+    <Calculator size={22}/>
+  </NavButton>
+
+  <NavButton ruta='intereses' text="Intereses" client:visible>
+    <HandCoins size={22}/>
+  </NavButton>
+
+  <NavButton ruta='usuarios' text="Usuarios" client:visible>
+    <UsersRound size={22}/>
+  </NavButton>
+
+  <form class="w-full flex justify-center" method="POST">
+    <button id="logout" class="flex gap-5 absolute bottom-10 cursor-pointer hover:bg-red-400 px-5 py-2 rounded-full transition-all duration-300">
+      <svg width="20" height="21" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.45833 24.125C2.74792 24.125 2.13976 23.872 1.63385 23.3661C1.12795 22.8602 0.875 22.2521 0.875 21.5417V3.45833C0.875 2.74792 1.12795 2.13976 1.63385 1.63385C2.13976 1.12795 2.74792 0.875 3.45833 0.875H11.2083C11.5743 0.875 11.8811 0.998785 12.1286 1.24635C12.3762 1.49392 12.5 1.80069 12.5 2.16667C12.5 2.53264 12.3762 2.83941 12.1286 3.08698C11.8811 3.33455 11.5743 3.45833 11.2083 3.45833H3.45833V21.5417H11.2083C11.5743 21.5417 11.8811 21.6655 12.1286 21.913C12.3762 22.1606 12.5 22.4674 12.5 22.8333C12.5 23.1993 12.3762 23.5061 12.1286 23.7536C11.8811 24.0012 11.5743 24.125 11.2083 24.125H3.45833ZM19.1844 13.7917H9.91667C9.55069 13.7917 9.24392 13.6679 8.99635 13.4203C8.74878 13.1727 8.625 12.866 8.625 12.5C8.625 12.134 8.74878 11.8273 8.99635 11.5797C9.24392 11.3321 9.55069 11.2083 9.91667 11.2083H19.1844L16.7625 8.78646C16.5257 8.54965 16.4073 8.25903 16.4073 7.91458C16.4073 7.57014 16.5257 7.26875 16.7625 7.01042C16.9993 6.75208 17.3007 6.61753 17.6667 6.60677C18.0326 6.59601 18.3448 6.71979 18.6031 6.97812L23.2208 11.5958C23.4792 11.8542 23.6083 12.1556 23.6083 12.5C23.6083 12.8444 23.4792 13.1458 23.2208 13.4042L18.6031 18.0219C18.3448 18.2802 18.038 18.404 17.6828 18.3932C17.3276 18.3825 17.0208 18.2479 16.7625 17.9896C16.5257 17.7312 16.4127 17.4245 16.4234 17.0693C16.4342 16.7141 16.558 16.4181 16.7948 16.1812L19.1844 13.7917Z" fill="#393939"/>
+      </svg>
+      
+      <h1 class="font-semibold"> Cerrar sesion </h1>  
+    </button>
+  </form>
+
+  <script>
+  </script>
+
+</section>
